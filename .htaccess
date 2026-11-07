@@ -1,0 +1,15 @@
+Options -Indexes
+DirectoryIndex index.php
+
+# Limites de envio (servidores Apache com mod_php). Em PHP-FPM, use o arquivo .user.ini.
+<IfModule mod_php.c>
+  php_value upload_max_filesize 64M
+  php_value post_max_size 300M
+  php_value max_execution_time 300
+  php_value max_input_time 300
+</IfModule>
+
+# Bloqueia acesso direto a arquivos internos
+<FilesMatch "^(README\.md|router\.php|\.user\.ini|\.git.*)$">
+  Require all denied
+</FilesMatch>

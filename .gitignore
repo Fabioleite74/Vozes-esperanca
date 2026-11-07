@@ -1,0 +1,6 @@
+# Conteúdo gerado em produção (banco e arquivos enviados)
+/data/*
+!/data/.htaccess
+/uploads/*
+!/uploads/.htaccess
+.DS_Store
