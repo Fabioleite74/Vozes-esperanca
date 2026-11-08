@@ -1,0 +1,26 @@
+{
+  "name": "Hospedagem do coral",
+  "host": "ftp.seudominio.com.br",
+  "protocol": "ftp",
+  "port": 21,
+  "username": "SEU_USUARIO_FTP",
+  "password": "SUA_SENHA_FTP",
+  "remotePath": "/public_html",
+  "uploadOnSave": false,
+  "useTempFile": false,
+  "openSsh": false,
+  "ignore": [
+    ".vscode",
+    ".git",
+    ".github",
+    ".DS_Store",
+    ".editorconfig",
+    ".gitignore",
+    "data/*.sqlite",
+    "uploads/*.*",
+    "scripts",
+    "router.php",
+    "README.md",
+    "DEPLOY.md"
+  ]
+}

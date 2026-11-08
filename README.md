@@ -12,7 +12,7 @@ cadastrar e atualizar os arquivos.
   - player para ouvir o áudio de cada naipe direto no navegador (um toca por vez);
   - botão para baixar cada áudio (com nome amigável, ex.: `ave-maria-soprano.mp3`);
   - partitura exibida na própria página, com opções de abrir em nova aba ou baixar.
-- Layout responsivo (funciona bem no celular) e com modo escuro automático.
+- Visual com as cores da arte do coral, responsivo (funciona bem no celular) e com modo escuro automático.
 
 **Área administrativa** (`/admin`)
 - Primeiro acesso: o site pede para criar o usuário administrador.
@@ -51,13 +51,17 @@ location ~ ^/uploads/.*\.(php\d?|phtml|phar|html?|svg|js)$ { deny all; }
 client_max_body_size 300M;
 ```
 
-## Rodar localmente
+## Trabalhar no VS Code e publicar
+
+O passo a passo completo está em **[DEPLOY.md](DEPLOY.md)**: instalação, como rodar o site no computador, onde mexer em cada parte e as duas formas de publicar (automática pelo GitHub ou direto do VS Code por FTP).
+
+Resumo:
 
 ```bash
-php -S localhost:8000 router.php
+php -S localhost:8000 router.php     # ou Ctrl+Shift+B no VS Code
+php scripts/exemplo.php              # cria uma música de teste
+php scripts/verificar.php            # verifica a sintaxe de todo o PHP
 ```
-
-Abra http://localhost:8000 (site) e http://localhost:8000/admin (administração).
 
 ## Estrutura
 
@@ -66,8 +70,11 @@ index.php          Repertório (lista + busca)
 musica.php         Página da música: players, downloads e partitura
 admin/             Área administrativa (login, lista, edição, exclusão, senha)
 inc/bootstrap.php  Configuração, banco, autenticação, upload
-inc/layout.php     Cabeçalho e rodapé
-assets/            CSS e JS
+inc/layout.php     Cabeçalho, rodapé e ícones
+assets/            CSS, JS e imagens (assets/img)
+scripts/           Utilitários de desenvolvimento (exemplo, verificação)
+.vscode/           Configurações, tarefas e extensões recomendadas do VS Code
+.github/workflows/ Publicação automática por FTP
 uploads/           Arquivos enviados (não versionados)
 data/              Banco SQLite (não versionado)
 ```
@@ -77,7 +84,8 @@ data/              Banco SQLite (não versionado)
 - **Nome do site:** constante `SITE_NOME` em `inc/bootstrap.php`.
 - **Naipes:** constante `VOZES` em `inc/bootstrap.php` (ex.: para incluir "Todas as vozes",
   adicione `'tutti' => 'Todas as vozes'`).
-- **Cores:** variáveis no topo de `assets/style.css`.
+- **Cores e fontes:** variáveis no topo de `assets/style.css`, seguindo o design system do coral
+  (creme, azul-coral, verde e laranja tirados da arte oficial; fontes Nunito e Caveat).
 
 ## Backup
 

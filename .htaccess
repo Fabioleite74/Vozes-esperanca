@@ -10,6 +10,6 @@ DirectoryIndex index.php
 </IfModule>
 
 # Bloqueia acesso direto a arquivos internos
-<FilesMatch "^(README\.md|router\.php|\.user\.ini|\.git.*)$">
+<FilesMatch "^(README\.md|DEPLOY\.md|router\.php|\.user\.ini|\.editorconfig|\.git.*)$">
   Require all denied
 </FilesMatch>

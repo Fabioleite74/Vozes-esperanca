@@ -1,0 +1,19 @@
+{
+  "files.encoding": "utf8",
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.tabSize": 4,
+  "[css]": { "editor.tabSize": 2 },
+  "[javascript]": { "editor.tabSize": 2 },
+  "[json]": { "editor.tabSize": 2 },
+  "php.validate.enable": true,
+  "intelephense.environment.phpVersion": "8.1.0",
+  "files.exclude": {
+    "**/.ftp-deploy-sync-state.json": true
+  },
+  "search.exclude": {
+    "data/**": true,
+    "uploads/**": true
+  }
+}

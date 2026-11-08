@@ -4,3 +4,7 @@
 /uploads/*
 !/uploads/.htaccess
 .DS_Store
+
+# Configuração pessoal de FTP do VS Code (contém senha)
+.vscode/sftp.json
+.ftp-deploy-sync-state.json

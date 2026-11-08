@@ -103,8 +103,8 @@ cabecalho($m['id'] ? 'Editar música' : 'Nova música', '../', true);
     <label>Autor / Arranjo
       <input name="autor" maxlength="200" value="<?= e($m['autor']) ?>" placeholder="Ex.: Letra e música de Fulano · Arr. Ciclano">
     </label>
-    <label>Observações
-      <textarea name="descricao" rows="3" placeholder="Informações úteis para os coralistas (tom, andamento, ensaio...)"><?= e($m['descricao']) ?></textarea>
+    <label>Recado para os coralistas
+      <textarea name="descricao" rows="3" placeholder="Tom, andamento, trechos para estudar antes do ensaio…"><?= e($m['descricao']) ?></textarea>
     </label>
   </fieldset>
 
@@ -123,7 +123,7 @@ cabecalho($m['id'] ? 'Editar música' : 'Nova música', '../', true);
           <?php else: ?>
             <span class="ajuda">Nenhum áudio enviado.</span>
           <?php endif; ?>
-          <input type="file" name="audio_<?= e($chave) ?>" accept="audio/*,.<?= implode(',.', AUDIO_EXTS) ?>">
+          <input type="file" name="audio_<?= e($chave) ?>" aria-label="Arquivo de áudio: <?= e($rotulo) ?>" accept="audio/*,.<?= implode(',.', AUDIO_EXTS) ?>">
         </div>
       <?php endforeach; ?>
     </div>
@@ -133,18 +133,18 @@ cabecalho($m['id'] ? 'Editar música' : 'Nova música', '../', true);
     <legend>Partitura (PDF)</legend>
     <div class="campo-arquivo">
       <?php if ($m['partitura']): ?>
-        <p><a href="../uploads/<?= rawurlencode($m['partitura']) ?>" target="_blank">📄 Ver partitura atual</a> (<?= e(tamanho_legivel($m['partitura'])) ?>)</p>
+        <p><a href="../uploads/<?= rawurlencode($m['partitura']) ?>" target="_blank">Ver partitura atual</a> (<?= e(tamanho_legivel($m['partitura'])) ?>)</p>
         <label class="check"><input type="checkbox" name="remover_partitura" value="1"> Remover partitura atual</label>
         <span class="ajuda">Ou envie outro PDF para substituir:</span>
       <?php else: ?>
         <span class="ajuda">Nenhuma partitura enviada.</span>
       <?php endif; ?>
-      <input type="file" name="partitura" accept="application/pdf,.pdf">
+      <input type="file" name="partitura" accept="application/pdf,.pdf" aria-label="Arquivo PDF da partitura">
     </div>
   </fieldset>
 
   <div class="acoes">
-    <button type="submit" class="botao">💾 Salvar</button>
+    <button type="submit" class="botao botao-verde">Salvar música</button>
     <a class="botao botao-sec" href="index.php">Cancelar</a>
   </div>
 </form>

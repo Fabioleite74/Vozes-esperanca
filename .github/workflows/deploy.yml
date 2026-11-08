@@ -1,0 +1,55 @@
+# Publica o site na hospedagem por FTP sempre que houver push na branch main.
+# Também pode ser executado manualmente em: GitHub > Actions > "Publicar site" > Run workflow.
+#
+# Configure em GitHub > Settings > Secrets and variables > Actions:
+#   Secrets:   FTP_SERVER, FTP_USERNAME, FTP_PASSWORD
+#   Variables: FTP_SERVER_DIR  (ex.: /public_html/  ou  /htdocs/ — termine com /)
+#
+# As pastas data/ (banco) e uploads/ (áudios e partituras) NUNCA são enviadas nem apagadas.
+# O próprio site cria essas pastas, com a proteção .htaccess, no primeiro acesso.
+name: Publicar site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+      - name: Verificar sintaxe PHP
+        run: php scripts/verificar.php
+
+  publicar:
+    needs: verificar
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enviar arquivos por FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ vars.FTP_SERVER_DIR || '/public_html/' }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            .vscode/**
+            scripts/**
+            data/**
+            uploads/**
+            router.php
+            README.md
+            DEPLOY.md
+            .editorconfig

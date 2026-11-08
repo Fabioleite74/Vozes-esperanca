@@ -1,0 +1,34 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Rodar site local (http://localhost:8000)",
+      "type": "shell",
+      "command": "php -S localhost:8000 router.php",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "php-server",
+        "pattern": { "regexp": "^__nunca__$" },
+        "background": {
+          "activesBegin": ".",
+          "beginsPattern": "Development Server",
+          "endsPattern": "Development Server"
+        }
+      },
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Criar música de exemplo",
+      "type": "shell",
+      "command": "php scripts/exemplo.php",
+      "problemMatcher": []
+    },
+    {
+      "label": "Verificar sintaxe PHP",
+      "type": "shell",
+      "command": "php scripts/verificar.php",
+      "problemMatcher": []
+    }
+  ]
+}

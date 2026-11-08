@@ -13,6 +13,9 @@ define('DB_FILE', DATA_DIR . '/coral.sqlite');
 /** Nome exibido no site. */
 const SITE_NOME = 'Coral Vozes da Esperança';
 
+/** Linha de apoio exibida no cabeçalho e no rodapé. */
+const SITE_INSTITUICAO = 'Centro Espírita Luz da Esperança · Macaé/RJ';
+
 /** Naipes disponíveis (chave interna => rótulo). Para incluir outro, basta adicionar aqui. */
 const VOZES = [
     'soprano'  => 'Soprano',
@@ -39,11 +42,7 @@ function db(): PDO
     if ($pdo) {
         return $pdo;
     }
-    foreach ([DATA_DIR, UPLOAD_DIR] as $dir) {
-        if (!is_dir($dir)) {
-            mkdir($dir, 0775, true);
-        }
-    }
+    garantir_pastas();
     $pdo = new PDO('sqlite:' . DB_FILE);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
@@ -70,6 +69,30 @@ function db(): PDO
         UNIQUE (musica_id, voz)
     )');
     return $pdo;
+}
+
+/**
+ * Cria data/ e uploads/ com seus .htaccess de proteção, caso ainda não existam
+ * (o deploy automático não envia essas pastas para não apagar os arquivos do coral).
+ */
+function garantir_pastas(): void
+{
+    $protecoes = [
+        DATA_DIR => "Require all denied\n",
+        UPLOAD_DIR => "# Arquivos enviados são servidos apenas como conteúdo estático — nunca executados.\n"
+            . "Options -Indexes -ExecCGI\n"
+            . "<FilesMatch \"\\.(php\\d?|phtml|phar|pl|py|cgi|sh|html?|svg|js)$\">\n  Require all denied\n</FilesMatch>\n"
+            . "<IfModule mod_php.c>\n  php_flag engine off\n</IfModule>\n"
+            . "<IfModule mod_headers.c>\n  Header set X-Content-Type-Options \"nosniff\"\n</IfModule>\n",
+    ];
+    foreach ($protecoes as $dir => $htaccess) {
+        if (!is_dir($dir)) {
+            mkdir($dir, 0775, true);
+        }
+        if (!is_file($dir . '/.htaccess')) {
+            @file_put_contents($dir . '/.htaccess', $htaccess);
+        }
+    }
 }
 
 /** Escapa texto para HTML. */
