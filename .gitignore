@@ -8,3 +8,6 @@
 # Configuração pessoal de FTP do VS Code (contém senha)
 .vscode/sftp.json
 .ftp-deploy-sync-state.json
+
+# Pacotes gerados para download
+*.zip
